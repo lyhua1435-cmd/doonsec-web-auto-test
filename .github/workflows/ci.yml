@@ -1,0 +1,41 @@
+name: CI
+
+# 说明：被测站点（wechat.doonsec.com）首次访问需要微信扫码解锁，
+# 无法在无人值守的公有 Runner 上完成登录，因此 CI 只做"框架健康度"校验：
+# 依赖可安装、代码可编译、用例可被 pytest 正确收集、用例总数符合预期。
+# 全量执行请在本地用 `pytest --pause-login` 手工扫码后运行。
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  framework-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Byte-compile all sources
+        run: python -m compileall -q base page tests conftest.py
+
+      - name: Collect test cases
+        run: |
+          pytest --collect-only -q | tee collected.txt
+          COUNT=$(grep -c "::" collected.txt || true)
+          echo "收集到用例数: $COUNT"
+          test "$COUNT" -ge 30 || (echo "用例数量少于 30，检查是否有文件被误删" && exit 1)

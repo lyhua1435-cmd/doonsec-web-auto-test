@@ -1,0 +1,32 @@
+﻿洞见微信 Web 自动化演示测试用例（30条）,,,,,,,,,,
+用例编号,测试模块,用例标题,前置条件,测试步骤,预期结果,用例类型,优先级,PO页面对象,pytest对应函数,课堂讲解要点
+DJWX-AUTO-001,首页与导航,打开首页验证站点访问,已扫码/解锁洞见微信网站；Chrome 会话已启动,1. 打开 https://wechat.doonsec.com/；2. 获取当前 URL,URL 包含 wechat.doonsec.com，说明进入洞见微信站点,正常,高,page/home_page.py,tests/test_01_home_navigation.py::test_01_open_home_url,展示 fixture 只打开一次浏览器后访问首页
+DJWX-AUTO-002,首页与导航,首页标题校验,已进入首页,1. 打开首页；2. 获取浏览器标题,标题包含“安全圈微信搜索”，体现微信文章搜索平台定位,正常,高,page/home_page.py,tests/test_01_home_navigation.py::test_02_home_title_contains_keyword,适合讲 assert 包含判断
+DJWX-AUTO-003,首页与导航,首页 Logo 展示校验,已进入首页,1. 使用 CSS_SELECTOR 定位 .logo img；2. 判断是否展示,Logo 元素可见，首页品牌展示正常,界面,中,page/home_page.py,tests/test_01_home_navigation.py::test_03_home_logo_display,体现 CSS 定位
+DJWX-AUTO-004,首页与导航,首页搜索入口图标展示,已进入首页,1. 使用 CLASS_NAME 定位 search_pic；2. 判断搜索图标是否展示,搜索入口图标可见，用户可识别搜索功能入口,界面,中,page/home_page.py,tests/test_01_home_navigation.py::test_04_home_search_icon_display,体现 class name 定位
+DJWX-AUTO-005,首页与导航,公众号导航入口展示,已进入首页,1. 使用 LINK_TEXT 定位“公众号”；2. 获取文本,导航文本为“公众号”，公众号内容入口存在,正常,高,page/navigation_page.py,tests/test_01_home_navigation.py::test_05_account_nav_display,体现 link text 定位
+DJWX-AUTO-006,首页与导航,高级搜索导航入口展示,已进入首页,1. 使用 PARTIAL_LINK_TEXT 定位“高级搜索”；2. 获取文本,导航文本包含“高级搜索”，全文搜索入口存在,正常,高,page/navigation_page.py,tests/test_01_home_navigation.py::test_06_es_nav_display,体现 partial link text 定位
+DJWX-AUTO-007,首页与导航,高级搜索链接地址校验,已进入首页,1. 定位高级搜索链接；2. 读取 href 属性,href 中包含 /es，指向全文搜索页面,正常,高,page/navigation_page.py,tests/test_01_home_navigation.py::test_07_es_nav_href,体现元素属性断言
+DJWX-AUTO-008,首页与导航,点击高级搜索切换页面,已进入首页,1. 点击“高级搜索”；2. 如点击未跳转则使用 href 打开；3. 获取 URL,页面切换到 /es 全文搜索页面,正常,高,page/navigation_page.py,tests/test_01_home_navigation.py::test_08_click_es_nav_switch_page,用于课堂展示页面切换
+DJWX-AUTO-009,全文搜索,打开全文搜索页面,已扫码/解锁网站,1. 打开 /es 页面；2. 获取当前 URL,URL 包含 /es，全文搜索页面打开成功,正常,高,page/search_page.py,tests/test_02_full_text_search.py::test_09_open_full_text_search_page,对应 70 万文章全文搜索入口
+DJWX-AUTO-010,全文搜索,全文搜索输入框展示,已进入 /es 页面,1. 使用 NAME 定位 keyword 输入框；2. 判断是否展示,搜索输入框可见，用户可以输入关键词,界面,高,page/search_page.py,tests/test_02_full_text_search.py::test_10_keyword_input_display,体现 name 定位
+DJWX-AUTO-011,全文搜索,搜索输入框属性校验,已进入 /es 页面,1. 定位 keyword 输入框；2. 读取 name 属性,name 属性等于 keyword，表单字段符合预期,正常,中,page/search_page.py,tests/test_02_full_text_search.py::test_11_keyword_input_name,适合讲表单属性
+DJWX-AUTO-012,全文搜索,输入 CVE 关键字,已进入 /es 页面,1. 清空输入框；2. 输入 CVE；3. 读取 value,输入框 value 为 CVE,正常,高,page/search_page.py,tests/test_02_full_text_search.py::test_12_input_cve_keyword,安全场景关键词
+DJWX-AUTO-013,全文搜索,输入漏洞复现关键字,已进入 /es 页面,1. 清空输入框；2. 输入漏洞复现；3. 读取 value,输入框 value 为“漏洞复现”,正常,高,page/search_page.py,tests/test_02_full_text_search.py::test_13_input_vulnerability_keyword,安全垂直领域搜索场景
+DJWX-AUTO-014,全文搜索,全文搜索按钮展示,已进入 /es 页面,1. 使用 CSS_SELECTOR 定位搜索按钮；2. 判断是否展示,搜索按钮可见，搜索表单完整,界面,中,page/search_page.py,tests/test_02_full_text_search.py::test_14_search_button_display,体现 css selector 定位
+DJWX-AUTO-015,全文搜索,全文搜索按钮可点击,已进入 /es 页面,1. 定位搜索按钮；2. 判断 is_enabled,按钮可用，用户可以提交搜索,正常,高,page/search_page.py,tests/test_02_full_text_search.py::test_15_search_button_enabled,按钮状态校验
+DJWX-AUTO-016,全文搜索,提交 CVE 搜索,已进入 /es 页面,1. 输入 CVE；2. 点击搜索按钮；3. 获取 URL,页面仍处于搜索页或 URL 携带 keyword 参数，搜索动作执行成功,正常,高,page/search_page.py,tests/test_02_full_text_search.py::test_16_submit_cve_search,体现全文搜索核心功能
+DJWX-AUTO-017,全文搜索,提交漏洞复现搜索,已进入 /es 页面,1. 输入漏洞复现；2. 点击搜索按钮；3. 获取 URL,搜索动作执行成功，页面保持在全文搜索相关页面,正常,高,page/search_page.py,tests/test_02_full_text_search.py::test_17_submit_vulnerability_search,和项目安全文章检索贴合
+DJWX-AUTO-018,全文搜索,修改搜索关键字,已进入 /es 页面,1. 输入 CVE；2. 再输入 POC；3. 读取 value,输入框最终 value 为 POC，说明可重新编辑关键词,正常,中,page/search_page.py,tests/test_02_full_text_search.py::test_18_change_search_keyword,体现 clear + send_keys
+DJWX-AUTO-019,分类展示,最新分类入口展示,已进入首页,1. 使用 XPATH 定位 id 为 new 的分类；2. 判断是否展示,“最新”分类入口可见,界面,高,page/category_page.py,tests/test_03_category_display.py::test_19_new_category_display,体现 xpath 定位
+DJWX-AUTO-020,分类展示,最新分类文本校验,已进入首页,1. 定位“最新”分类；2. 获取文本,分类文本包含“最新”,正常,中,page/category_page.py,tests/test_03_category_display.py::test_20_new_category_text,分类展示校验
+DJWX-AUTO-021,分类展示,点击最新分类,已进入首页,1. 滚动到“最新”分类；2. 点击分类；3. 获取文本,点击动作成功执行，分类文本仍为“最新”,正常,高,page/category_page.py,tests/test_03_category_display.py::test_21_click_new_category,课堂可以看到页面滚动/点击
+DJWX-AUTO-022,分类展示,分类列表不为空,已进入首页,1. 获取页面 li 分类元素；2. 统计数量,分类列表数量大于 0，说明分类区域存在,正常,中,page/category_page.py,tests/test_03_category_display.py::test_22_category_list_not_empty,内容分类展示模块
+DJWX-AUTO-023,分类展示,分类点击后链接仍正常,已进入首页,1. 点击“最新”；2. 获取页面所有 a 链接数量,链接数量大于 5，页面内容没有异常清空,异常兼容,中,page/category_page.py,tests/test_03_category_display.py::test_23_home_links_after_category_click,对应之前发现的分类点击异常风险
+DJWX-AUTO-024,分类展示,首页包含最新分类信息,已进入首页,1. 获取页面源码；2. 检查“最新”关键字,页面源码包含“最新”，分类信息正常渲染,正常,中,page/category_page.py,tests/test_03_category_display.py::test_24_home_source_contains_new_text,分类内容渲染校验
+DJWX-AUTO-025,公众号入口,公众号入口链接不为空,已进入首页,1. 定位“公众号”导航；2. 读取 href,href 不为空，公众号入口可访问,正常,高,page/navigation_page.py,tests/test_04_account_article_entries.py::test_25_account_nav_href_not_empty,公众号任务/内容入口
+DJWX-AUTO-026,公众号入口,点击公众号入口,已进入首页,1. 点击“公众号”；2. 获取当前 URL,页面仍在 wechat.doonsec.com 站点内，入口点击成功,正常,高,page/navigation_page.py,tests/test_04_account_article_entries.py::test_26_click_account_nav,用于展示导航点击
+DJWX-AUTO-027,公众号入口,页面包含公众号内容,已进入首页,1. 获取页面源码；2. 检查公众号关键字,页面包含“公众号”，说明公众号相关内容存在,正常,中,page/home_page.py,tests/test_04_account_article_entries.py::test_27_page_contains_account_text,公众号内容展示
+DJWX-AUTO-028,文章入口,首页存在多个文章或功能链接,已进入首页,1. 使用 TAG_NAME 获取所有 a 标签；2. 统计数量,链接数量大于 5，首页内容入口较完整,正常,中,page/home_page.py,tests/test_04_account_article_entries.py::test_28_home_links_count,体现 tag name 定位
+DJWX-AUTO-029,文章入口,首页存在有效链接,已进入首页,1. 遍历首页链接；2. 找到第一个 http 链接,存在至少一个有效文章/功能链接,正常,中,page/home_page.py,tests/test_04_account_article_entries.py::test_29_first_valid_link_exists,文章入口可访问性
+DJWX-AUTO-030,文章入口,有效链接格式校验,已进入首页,1. 获取第一个有效链接；2. 读取 href,href 以 http 开头，链接格式有效,正常,中,page/home_page.py,tests/test_04_account_article_entries.py::test_30_first_valid_link_href,文章快照/详情入口的基础校验
